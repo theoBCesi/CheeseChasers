@@ -33,8 +33,8 @@ public class Dessin extends View implements View.OnTouchListener {
         int heightTotal = this.getHeight();
         int heightCase = heightTotal / 10;
 
-        for (int i = 0; i < jeux.length; i++) {
-            for (int j = 0; j < jeux[i].length; j++) {
+        for (int i = 0; i < jeux.length -1 ; i++) {
+            for (int j = 0; j < jeux[i].length -1 ; j++) {
                 Cercle c = new Cercle((widthCase + (widthCase * i)), (heightCase + (heightCase * j)), 15);
                 c.draw(canvas);
             }
@@ -81,7 +81,7 @@ class Case {
 
     public void draw(Canvas canvas) {
         Log.d("drawCase", "draw");
-        canvas.drawCircle(100, 100, 50, paint);
+        //canvas.drawCircle(100, 100, 50, paint);
         //canvas.drawRect(20, 20, 20, 20, paint);
         //canvas.drawBitmap(getRessource());
     }
