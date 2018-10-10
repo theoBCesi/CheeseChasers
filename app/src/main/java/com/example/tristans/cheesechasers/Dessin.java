@@ -1,6 +1,8 @@
 package com.example.tristans.cheesechasers;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,7 +18,7 @@ import java.util.List;
 public class Dessin extends View implements View.OnTouchListener {
 
     //LinkedList<Cercle> cercles;
-    Case[][] jeux = new Case[5][10];
+    Cercle[][] jeux = new Cercle[10][10];
 
     public Dessin(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -26,13 +28,26 @@ public class Dessin extends View implements View.OnTouchListener {
     @Override
     protected void onDraw(Canvas canvas) {
         Log.d("onDraw", "" + this.getWidth() + "-" + this.getHeight());
-        Case c =new Case(100,100,100);
-        c.draw(canvas);
+        int widthTotal = this.getWidth();
+        int widthCase = widthTotal / 10;
+        int heightTotal = this.getHeight();
+        int heightCase = heightTotal / 10;
+
+        for (int i = 0; i < jeux.length; i++) {
+            for (int j = 0; j < jeux[i].length; j++) {
+                Cercle c = new Cercle((widthCase + (widthCase * i)), (heightCase + (heightCase * j)), 15);
+                c.draw(canvas);
+            }
+        }
+
+        //Paint p = new Paint();
+        //Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+        //canvas.drawBitmap(b, 0, 0, p);
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        //Log.d("onTouch", "x: " + event.getX() + " - y: " + event.getY());
+        Log.d("onTouch", "-x: " + event.getX() + " - y: " + event.getY());
 
         //switch (event.getAction()) {
         //    case MotionEvent.ACTION_DOWN:
@@ -65,9 +80,29 @@ class Case {
     }
 
     public void draw(Canvas canvas) {
-        Log.d("drawCase","draw");
+        Log.d("drawCase", "draw");
         canvas.drawCircle(100, 100, 50, paint);
         //canvas.drawRect(20, 20, 20, 20, paint);
         //canvas.drawBitmap(getRessource());
+    }
+}
+
+class Cercle {
+    int xc, yc, rayon;
+    private Paint paint;
+
+    public Cercle(int x, int y, int r) {
+        xc = x;
+        yc = y;
+        rayon = r;
+        paint = new Paint();
+        paint.setColor(Color.rgb((int) (Math.random() * 255),
+                (int) (Math.random() * 255),
+                (int) (Math.random() * 255))
+        );
+    }
+
+    public void draw(Canvas canvas) {
+        canvas.drawCircle(xc, yc, rayon, paint);
     }
 }
