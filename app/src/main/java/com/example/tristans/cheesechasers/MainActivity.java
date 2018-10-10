@@ -18,7 +18,7 @@ public class MainActivity extends Activity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent defineIntent = new Intent(lecontext, Pagegame.class);
+                Intent defineIntent = new Intent(lecontext, PageGame.class);
                 lecontext.startActivity(defineIntent);
             }
         });
