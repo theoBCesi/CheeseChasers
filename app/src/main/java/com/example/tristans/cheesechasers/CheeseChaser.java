@@ -27,7 +27,7 @@ class CheeseChaser {
         this.games = new Case[column][row];
         this.caseWidth = maxWidth / this.games[0].length;
         this.caseHeight = maxHeight / this.games[0].length;
-        this.cartes = initialiserCartes(7, 20, 4, 9);
+        this.cartes = initialiserCartes(1, 1, 1, 1);
         this.games = initialiserCase(column, row);
     }
 
@@ -100,7 +100,7 @@ class CheeseChaser {
         }
     }
 
-    public void miseAjourPlus(Case caseCliqué) {
+    public void miseAjourPlus(Case caseCliqué,Integer test0) {
         int xColumn = getNumColumn(caseCliqué.positionX, caseCliqué.positionY, true);
         int yRow = getNumColumn(caseCliqué.positionX, caseCliqué.positionY, false);
 
@@ -111,25 +111,31 @@ class CheeseChaser {
                 }
             }
         }
+        if(test0 != 0){
+            if (this.games[xColumn - 1][yRow].type == 0)
+                this.games[xColumn - 1][yRow].type = 1;
+            if (this.games[xColumn - 1][yRow - 1].type == 0)
+                this.games[xColumn - 1][yRow - 1].type = 1;
+            if (this.games[xColumn - 1][yRow + 1].type == 0)
+                this.games[xColumn - 1][yRow + 1].type = 1;
 
-        if (this.games[xColumn - 1][yRow].type == 0)
-            this.games[xColumn - 1][yRow].type = 1;
-        if (this.games[xColumn - 1][yRow - 1].type == 0)
-            this.games[xColumn - 1][yRow - 1].type = 1;
-        if (this.games[xColumn - 1][yRow + 1].type == 0)
-            this.games[xColumn - 1][yRow + 1].type = 1;
+            if (this.games[xColumn][yRow - 1].type == 0)
+                this.games[xColumn][yRow - 1].type = 1;
+            if (this.games[xColumn][yRow + 1].type == 0)
+                this.games[xColumn][yRow + 1].type = 1;
 
-        if (this.games[xColumn][yRow - 1].type == 0)
-            this.games[xColumn][yRow - 1].type = 1;
-        if (this.games[xColumn][yRow + 1].type == 0)
-            this.games[xColumn][yRow + 1].type = 1;
+            if (this.games[xColumn + 1][yRow].type == 0)
+                this.games[xColumn + 1][yRow].type = 1;
+            if (this.games[xColumn + 1][yRow - 1].type == 0)
+                this.games[xColumn + 1][yRow - 1].type = 1;
+            if (this.games[xColumn + 1][yRow + 1].type == 0)
+                this.games[xColumn + 1][yRow + 1].type = 1;
+        }
 
-        if (this.games[xColumn + 1][yRow].type == 0)
-            this.games[xColumn + 1][yRow].type = 1;
-        if (this.games[xColumn + 1][yRow - 1].type == 0)
-            this.games[xColumn + 1][yRow - 1].type = 1;
-        if (this.games[xColumn + 1][yRow + 1].type == 0)
-            this.games[xColumn + 1][yRow + 1].type = 1;
+
+
+
+
     }
 
     public int getNumColumn(int positionX, int positionY, boolean row) {

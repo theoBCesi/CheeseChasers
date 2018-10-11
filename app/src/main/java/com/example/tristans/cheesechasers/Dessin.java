@@ -80,9 +80,9 @@ public class Dessin extends View implements View.OnTouchListener {
                 Log.d("Case touché", " type  " + c.type + "  x  " + c.positionX + " y  " + c.positionY);
                 if (c.type == 1) {
                     cheeseChaser.games[cheeseChaser.getNumColumn(c.positionX, c.positionY, true)][cheeseChaser.getNumColumn(c.positionX, c.positionY, false)].type = cheeseChaser.cartes.get(0).type;
+
                     cheeseChaser.retirerCarte();
-                    updateCarteEnHaut();
-                    cheeseChaser.miseAjourPlus(c);
+                    cheeseChaser.miseAjourPlus(c,cheeseChaser.cartes.size());
                 } else {
                     Log.d("onTouch", "pas de plus");
                 }
@@ -93,9 +93,10 @@ public class Dessin extends View implements View.OnTouchListener {
     }
 
     public void updateCarteEnHaut() {
+        boolean test = true;
         /** Gestion de la case de la carte et premier démarrage du jeu **/
-        if (cheeseChaser.cartes.get(0) != null) {
-            Log.d("UpdateCarteEnHaut : ", "Card n°" + cheeseChaser.cartes.get(0).type);
+        if (cheeseChaser.cartes.size() != 0) {
+            //Log.d("UpdateCarteEnHaut : ", "Card n°" + cheeseChaser.cartes.get(0).type);
             int chiffre = cheeseChaser.cartes.get(0).type;
             switch (chiffre) {
                 case 2: // Souris
@@ -110,7 +111,11 @@ public class Dessin extends View implements View.OnTouchListener {
                 case 5: // Piège
                     ImageBtn.setBackgroundResource(R.drawable.mousetrap);
                     break;
+                default:
+                    break;
             }
+        } else {
+            ImageBtn.setBackgroundResource(R.drawable.croix);
         }
     }
 }
