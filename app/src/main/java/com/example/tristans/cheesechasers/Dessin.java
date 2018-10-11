@@ -80,9 +80,9 @@ public class Dessin extends View implements View.OnTouchListener {
                 Log.d("Case touché", " type  " + c.type + "  x  " + c.positionX + " y  " + c.positionY);
                 if (c.type == 1) {
                     cheeseChaser.games[cheeseChaser.getNumColumn(c.positionX, c.positionY, true)][cheeseChaser.getNumColumn(c.positionX, c.positionY, false)].type = cheeseChaser.cartes.get(0).type;
-
                     cheeseChaser.retirerCarte();
                     updateCarteEnHaut();
+                    cheeseChaser.miseAjourPlus(c);
                 } else {
                     Log.d("onTouch", "pas de plus");
                 }

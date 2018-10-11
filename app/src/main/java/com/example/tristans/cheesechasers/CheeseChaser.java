@@ -100,6 +100,38 @@ class CheeseChaser {
         }
     }
 
+    public void miseAjourPlus(Case caseCliqué) {
+        int xColumn = getNumColumn(caseCliqué.positionX, caseCliqué.positionY, true);
+        int yRow = getNumColumn(caseCliqué.positionX, caseCliqué.positionY, false);
+
+        for (int i = 0; i < games.length; i++) {
+            for (int j = 0; j < games[i].length; j++) {
+                if (games[i][j].type == 1) {
+                    games[i][j].type = 0;
+                }
+            }
+        }
+
+        if (this.games[xColumn - 1][yRow].type == 0)
+            this.games[xColumn - 1][yRow].type = 1;
+        if (this.games[xColumn - 1][yRow - 1].type == 0)
+            this.games[xColumn - 1][yRow - 1].type = 1;
+        if (this.games[xColumn - 1][yRow + 1].type == 0)
+            this.games[xColumn - 1][yRow + 1].type = 1;
+
+        if (this.games[xColumn][yRow - 1].type == 0)
+            this.games[xColumn][yRow - 1].type = 1;
+        if (this.games[xColumn][yRow + 1].type == 0)
+            this.games[xColumn][yRow + 1].type = 1;
+
+        if (this.games[xColumn + 1][yRow].type == 0)
+            this.games[xColumn + 1][yRow].type = 1;
+        if (this.games[xColumn + 1][yRow - 1].type == 0)
+            this.games[xColumn + 1][yRow - 1].type = 1;
+        if (this.games[xColumn + 1][yRow + 1].type == 0)
+            this.games[xColumn + 1][yRow + 1].type = 1;
+    }
+
     public int getNumColumn(int positionX, int positionY, boolean row) {
         for (int i = 0; i < games.length; i++) {
             for (int j = 0; j < games[i].length; j++) {
