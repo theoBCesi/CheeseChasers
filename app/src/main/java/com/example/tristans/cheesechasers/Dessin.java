@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -94,7 +95,7 @@ class Case {
 
     public void draw(Canvas canvas) {
         Log.d("drawCase", "draw");
-        //canvas.drawCircle(100, 100, 50, paint);
+        canvas.drawCircle(100, 100, 50, paint);
         //canvas.drawRect(20, 20, 20, 20, paint);
         //canvas.drawBitmap(getRessource());
     }
