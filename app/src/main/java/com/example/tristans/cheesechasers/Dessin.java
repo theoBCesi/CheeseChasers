@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.icu.text.LocaleDisplayNames;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -18,75 +19,54 @@ import java.util.List;
 
 public class Dessin extends View implements View.OnTouchListener {
 
-    //LinkedList<Cercle> cercles;
-    Cercle[][] jeux = new Cercle[10][10];
+    CheeseChaser cheeseChaser;
 
     public Dessin(Context context, AttributeSet attrs) {
         super(context, attrs);
+        //int toto=this.getWidth();
+
+        Log.d("Dessin", "start");
+        //Log.d("cheeseChaserMaxWidth", "" + cheeseChaser.maxWidth);
+        //Log.d("cheeseChaserMaxHeight", "" + cheeseChaser.maxHeight);
+
+        //Log.d("cheeseChaserCaseWidth", "" + cheeseChaser.caseWidth);
+        //Log.d("cheeseChaserCaseHeight", "" + cheeseChaser.caseHeight);
+        // Set image de la première carte en haut a droite
         this.setOnTouchListener(this);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Log.d("onDraw", "" + this.getWidth() + "-" + this.getHeight());
+        if (cheeseChaser == null) {
+            cheeseChaser = new CheeseChaser(20, 20, this.getWidth(), this.getHeight());
+        }
         int widthTotal = this.getWidth();
-        int widthCase = widthTotal / 10;
+        int widthCase = widthTotal / cheeseChaser.games.length;
         int heightTotal = this.getHeight();
-        int heightCase = heightTotal / 10;
+        int heightCase = heightTotal / cheeseChaser.games.length;
 
-        for (int i = 0; i < jeux.length -1 ; i++) {
-            for (int j = 0; j < jeux[i].length -1 ; j++) {
-                Cercle c = new Cercle((widthCase + (widthCase * i)), (heightCase + (heightCase * j)), 15);
+        for (int i = 0; i < cheeseChaser.games[i].length - 1; i++) {
+            for (int j = 0; j < cheeseChaser.games[j].length - 1; j++) {
+                Cercle c = new Cercle((widthCase + (widthCase * i)), (heightCase + (heightCase * j)), 10);
                 c.draw(canvas);
             }
         }
-
-        //Paint p = new Paint();
-        //Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.background);
-        //canvas.drawBitmap(b, 0, 0, p);
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         Log.d("onTouch", "-x: " + event.getX() + " - y: " + event.getY());
-
-        //switch (event.getAction()) {
-        //    case MotionEvent.ACTION_DOWN:
-        //        Case c = new Case(1, 100, 100);
-        //        jeux[0][1] = c;
-        //        break;
-        //}
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                Case c = cheeseChaser.getCase(event.getX(), event.getY());
+                Log.d("Case touché", " type  " + c.type + "  x  " + c.positionX + " y  " + c.positionY);
+                break;
+        }
         //this.invalidate();
         return true;
     }
 }
 
-
-class Case {
-    int type;
-    int largeur;
-    int hauteur;
-    private Paint paint;
-
-    public Case(int type, int largeur, int hauteur) {
-        this.type = type;
-        this.largeur = largeur;
-        this.hauteur = hauteur;
-        this.paint = new Paint();
-        paint.setStrokeWidth(3);
-        paint.setColor(Color.rgb((int) (Math.random() * 255),
-                (int) (Math.random() * 255),
-                (int) (Math.random() * 255))
-        );
-    }
-
-    public void draw(Canvas canvas) {
-        Log.d("drawCase", "draw");
-        canvas.drawCircle(100, 100, 50, paint);
-        //canvas.drawRect(20, 20, 20, 20, paint);
-        //canvas.drawBitmap(getRessource());
-    }
-}
 
 class Cercle {
     int xc, yc, rayon;
