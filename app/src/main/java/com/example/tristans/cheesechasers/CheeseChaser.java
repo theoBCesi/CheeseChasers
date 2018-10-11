@@ -28,7 +28,7 @@ class CheeseChaser {
         this.cartes = initialiserCartes(7, 20, 4, 9);
     }
 
-    public List<Card> initialiserCartes(int nbChat, int nbSouris, int nbTrap, int nbFromage) {
+    public static List<Card> initialiserCartes(int nbChat, int nbSouris, int nbTrap, int nbFromage) {
         List<Card> games = new ArrayList<Card>();
         for (int i = 0; i < nbChat; i++) {
             games.add(new Card(3)); // Chat

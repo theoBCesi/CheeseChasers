@@ -61,9 +61,10 @@
             android:orientation="vertical">
 
             <ImageButton
+                android:id="@+id/imgBtnCarte"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
-                android:background="@drawable/mouse" />
+                />
         </LinearLayout>
     </LinearLayout>
 
