@@ -69,9 +69,7 @@ public class Dessin extends View implements View.OnTouchListener {
                         newBitmap = Bitmap.createScaledBitmap(bitmap, cheeseChaser.caseWidth, cheeseChaser.caseHeight, true);
                         break;
                     default:
-                        bitmap = BitmapFactory.decodeResource(res, R.drawable.mousetrap);
-                        newBitmap = Bitmap.createScaledBitmap(bitmap, cheeseChaser.caseWidth, cheeseChaser.caseHeight, true);
-                        break;
+                        continue;
                 }
                 canvas.drawBitmap(newBitmap, i * cheeseChaser.caseWidth, j * cheeseChaser.caseHeight, paint);
             }
