@@ -1,12 +1,14 @@
 package com.example.tristans.cheesechasers;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -27,6 +29,15 @@ public class Dessin extends View implements View.OnTouchListener {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setFilterBitmap(true);
+        paint.setDither(true);
+        Resources res = getResources();
+        Bitmap bitmap = BitmapFactory.decodeResource(res, R.drawable.mouse);
+
+
         Log.d("onDraw", "" + this.getWidth() + "-" + this.getHeight());
         int widthTotal = this.getWidth();
         int widthCase = widthTotal / 10;
@@ -35,14 +46,15 @@ public class Dessin extends View implements View.OnTouchListener {
 
         for (int i = 0; i < jeux.length -1 ; i++) {
             for (int j = 0; j < jeux[i].length -1 ; j++) {
-                Cercle c = new Cercle((widthCase + (widthCase * i)), (heightCase + (heightCase * j)), 15);
-                c.draw(canvas);
+                //Cercle c = new Cercle((widthCase + (widthCase * i)), (heightCase + (heightCase * j)), 15);
+                canvas.drawBitmap(bitmap, (widthCase + (widthCase * i)), (heightCase + (heightCase * j)), paint);
+                //c.draw(canvas,b);
+
             }
         }
 
-        //Paint p = new Paint();
-        //Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.background);
-        //canvas.drawBitmap(b, 0, 0, p);
+
+
     }
 
     @Override
@@ -73,6 +85,7 @@ class Case {
         this.hauteur = hauteur;
         this.paint = new Paint();
         paint.setStrokeWidth(3);
+
         paint.setColor(Color.rgb((int) (Math.random() * 255),
                 (int) (Math.random() * 255),
                 (int) (Math.random() * 255))
@@ -95,14 +108,17 @@ class Cercle {
         xc = x;
         yc = y;
         rayon = r;
+        //paint.setFilterBitmap(true);
         paint = new Paint();
-        paint.setColor(Color.rgb((int) (Math.random() * 255),
+        /*paint.setColor(Color.rgb((int) (Math.random() * 255),
                 (int) (Math.random() * 255),
                 (int) (Math.random() * 255))
-        );
+        );*/
     }
 
-    public void draw(Canvas canvas) {
-        canvas.drawCircle(xc, yc, rayon, paint);
+    public void draw(Canvas canvas,Bitmap b) {
+
+        //canvas.drawBitmap(b, 10,10,paint);
+        //canvas.drawCircle(xc, yc, rayon, paint);
     }
 }
