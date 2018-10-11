@@ -13,6 +13,7 @@ import java.util.List;
 // 3 = Chat
 // 4 = Fromage
 // 5 = Trap
+// 6 = Souris morte
 class CheeseChaser {
     Case[][] games;
     List<Card> cartes;
@@ -144,6 +145,27 @@ class CheeseChaser {
         if (xColumn + 1 < xLenght && yRow + 1 < yLenght)
             if (this.games[xColumn + 1][yRow + 1].type == 0)
                 this.games[xColumn + 1][yRow + 1].type = 1;
+    }
+
+    public void miseAjourChatVsSouris() {
+        for (int i = 0; i < games.length; i++) {
+            for (int j = 0; j < games[i].length; j++) {
+                if (games[i][j].type == 3) {
+                    if (j - 1 >= 0)
+                        if (this.games[i][j - 1].type == 2)
+                            this.games[i][j - 1].type = 6;
+                    if (j + 1 < games[i].length)
+                        if (this.games[i][j + 1].type == 2)
+                            this.games[i][j + 1].type = 6;
+                    if (i - 1 >= 0)
+                        if (this.games[i - 1][j].type == 2)
+                            this.games[i - 1][j].type = 6;
+                    if (i + 1 < games.length)
+                        if (this.games[i + 1][j].type == 2)
+                            this.games[i + 1][j].type = 6;
+                }
+            }
+        }
     }
 
     public int getNumColumn(int positionX, int positionY, boolean row) {

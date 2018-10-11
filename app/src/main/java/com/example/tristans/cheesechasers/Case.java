@@ -12,6 +12,7 @@ import android.util.Log;
 // 3 = Chat
 // 4 = Fromage
 // 5 = Trap
+// 6 = Souris morte
 
 public class Case {
     int positionX;
