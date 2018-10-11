@@ -28,7 +28,7 @@ public class Dessin extends View implements View.OnTouchListener {
     @Override
     protected void onDraw(Canvas canvas) {
         if (cheeseChaser == null) {
-            cheeseChaser = new CheeseChaser(10, 10, this.getWidth(), this.getHeight());
+            cheeseChaser = new CheeseChaser(20, 20, this.getWidth(), this.getHeight());
         }
         Paint paint = new Paint();
         Resources res = getResources();
