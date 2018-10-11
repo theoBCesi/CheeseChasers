@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 
 // 0 = Vide
@@ -26,8 +27,8 @@ class CheeseChaser {
         this.games = new Case[column][row];
         this.caseWidth = maxWidth / this.games[0].length;
         this.caseHeight = maxHeight / this.games[0].length;
-        this.games = initialiserCase(column, row);
         this.cartes = initialiserCartes(7, 20, 4, 9);
+        this.games = initialiserCase(column, row);
     }
 
     public List<Card> initialiserCartes(int nbChat, int nbSouris, int nbTrap, int nbFromage) {
@@ -57,12 +58,26 @@ class CheeseChaser {
         for (int i = 0; i < cases.length; i++) {
             for (int j = 0; j < cases[i].length; j++) {
                 if (i == (column / 2) && j == (row / 2)) {
-                    cases[i][j] = new Case((this.caseWidth * i), (this.caseHeight * j), 2);
+                    cases[i][j] = new Case((this.caseWidth * i), (this.caseHeight * j), cartes.get(0).type);
                 } else {
                     cases[i][j] = new Case((this.caseWidth * i), (this.caseHeight * j), 0);
                 }
             }
         }
+
+        //Ajout des plus autour de la première case
+        cases[(column / 2) - 1][(row / 2)].type = 1;
+        cases[(column / 2) - 1][(row / 2) - 1].type = 1;
+        cases[(column / 2) - 1][(row / 2) + 1].type = 1;
+
+        cases[(column / 2)][(row / 2) - 1].type = 1;
+        cases[(column / 2)][(row / 2) + 1].type = 1;
+
+        cases[(column / 2) + 1][(row / 2)].type = 1;
+        cases[(column / 2) + 1][(row / 2) - 1].type = 1;
+        cases[(column / 2) + 1][(row / 2) + 1].type = 1;
+        retirerCarte();
+
         return cases;
     }
 
@@ -77,5 +92,25 @@ class CheeseChaser {
             }
         }
         return c;
+    }
+
+    public void retirerCarte() {
+        if (this.cartes.get(0) != null) {
+            this.cartes.remove(0);
+        }
+    }
+
+    public int getNumColumn(int positionX, int positionY, boolean row) {
+        for (int i = 0; i < games.length; i++) {
+            for (int j = 0; j < games[i].length; j++) {
+                if (games[i][j].positionY == positionY && games[i][j].positionX == positionX) {
+                    if (row)
+                        return i;
+                    else
+                        return j;
+                }
+            }
+        }
+        return -1;
     }
 }

@@ -5,20 +5,13 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.icu.text.LocaleDisplayNames;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Dessin extends View implements View.OnTouchListener {
@@ -39,27 +32,7 @@ public class Dessin extends View implements View.OnTouchListener {
         }
         Paint paint = new Paint();
         Resources res = getResources();
-
-        /** Gestion de la case de la carte et premier démarrage du jeu **/
-        List<Card> vListeCards = cheeseChaser.cartes;
-        if (vListeCards.get(0) != null) {
-            Log.d("Test : ", "Card n°" + vListeCards.get(0).type);
-            int chiffre = vListeCards.get(0).type;
-            switch (chiffre) {
-                case 2: // Souris
-                    ImageBtn.setBackgroundResource(R.drawable.mouse);
-                    break;
-                case 3: // Chat
-                    ImageBtn.setBackgroundResource(R.drawable.cat);
-                    break;
-                case 4: // Fromage
-                    ImageBtn.setBackgroundResource(R.drawable.cheese);
-                    break;
-                case 5: // Piège
-                    ImageBtn.setBackgroundResource(R.drawable.mousetrap);
-                    break;
-            }
-        }
+        updateCarteEnHaut();
         Log.d("onDraw", "" + this.getWidth() + "-" + this.getHeight());
         Bitmap bitmap;
         Bitmap newBitmap;
@@ -96,7 +69,6 @@ public class Dessin extends View implements View.OnTouchListener {
                 canvas.drawBitmap(newBitmap, i * cheeseChaser.caseWidth, j * cheeseChaser.caseHeight, paint);
             }
         }
-
     }
 
     @Override
@@ -106,9 +78,39 @@ public class Dessin extends View implements View.OnTouchListener {
             case MotionEvent.ACTION_DOWN:
                 Case c = cheeseChaser.getCase(event.getX(), event.getY());
                 Log.d("Case touché", " type  " + c.type + "  x  " + c.positionX + " y  " + c.positionY);
+                if (c.type == 1) {
+                    cheeseChaser.games[cheeseChaser.getNumColumn(c.positionX, c.positionY, true)][cheeseChaser.getNumColumn(c.positionX, c.positionY, false)].type = cheeseChaser.cartes.get(0).type;
+
+                    cheeseChaser.retirerCarte();
+                    updateCarteEnHaut();
+                } else {
+                    Log.d("onTouch", "pas de plus");
+                }
                 break;
         }
-        //this.invalidate();
+        this.invalidate();
         return true;
+    }
+
+    public void updateCarteEnHaut() {
+        /** Gestion de la case de la carte et premier démarrage du jeu **/
+        if (cheeseChaser.cartes.get(0) != null) {
+            Log.d("UpdateCarteEnHaut : ", "Card n°" + cheeseChaser.cartes.get(0).type);
+            int chiffre = cheeseChaser.cartes.get(0).type;
+            switch (chiffre) {
+                case 2: // Souris
+                    ImageBtn.setBackgroundResource(R.drawable.mouse);
+                    break;
+                case 3: // Chat
+                    ImageBtn.setBackgroundResource(R.drawable.cat);
+                    break;
+                case 4: // Fromage
+                    ImageBtn.setBackgroundResource(R.drawable.cheese);
+                    break;
+                case 5: // Piège
+                    ImageBtn.setBackgroundResource(R.drawable.mousetrap);
+                    break;
+            }
+        }
     }
 }
