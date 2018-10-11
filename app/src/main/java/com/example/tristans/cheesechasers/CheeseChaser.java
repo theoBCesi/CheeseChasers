@@ -22,6 +22,7 @@ class CheeseChaser {
     int maxHeight;
     int caseWidth;
     int caseHeight;
+    boolean gameOver;
 
     public CheeseChaser(int column, int row, int maxWidth, int maxHeight) {
         this.maxWidth = maxWidth;
@@ -102,7 +103,7 @@ class CheeseChaser {
         }
     }
 
-    public void miseAjourPlus(Case caseCliqué,Integer test0) {
+    public void miseAjourPlus(Case caseCliqué, Integer test0, boolean isDead) {
         int xColumn = getNumColumn(caseCliqué.positionX, caseCliqué.positionY, true);
         int yRow = getNumColumn(caseCliqué.positionX, caseCliqué.positionY, false);
 
@@ -118,7 +119,7 @@ class CheeseChaser {
             }
         }
 
-        if(test0 != 0) {
+        if (test0 != 0 && !isDead) {
             //Gauche
             if (xColumn - 1 >= 0)
                 if (this.games[xColumn - 1][yRow].type == 0)
@@ -182,6 +183,19 @@ class CheeseChaser {
                 }
             }
         }
+    }
+
+    public void deadOrAlive() {
+        int compteur = 0;
+        for (int i = 0; i < games.length; i++) {
+            for (int j = 0; j < games[i].length; j++) {
+                if (games[i][j].type == 5) {
+                    compteur++;
+                }
+            }
+        }
+        if (compteur >= 3)
+            gameOver = true;
     }
 
     public int getNumColumn(int positionX, int positionY, boolean row) {

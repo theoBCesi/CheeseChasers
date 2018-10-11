@@ -26,7 +26,7 @@ public class Dessin extends View implements View.OnTouchListener {
     @Override
     protected void onDraw(Canvas canvas) {
         if (cheeseChaser == null) {
-            cheeseChaser = new CheeseChaser(20, 20, this.getWidth(), this.getHeight());
+            cheeseChaser = new CheeseChaser(15, 15, this.getWidth(), this.getHeight());
         }
         Paint paint = new Paint();
         Resources res = getResources();
@@ -91,7 +91,8 @@ public class Dessin extends View implements View.OnTouchListener {
                     updateCarteEnHaut();
                     cheeseChaser.miseAjourChatVsSouris();
                     cheeseChaser.miseAjourTrapVsSouris();
-                    cheeseChaser.miseAjourPlus(c,cheeseChaser.cartes.size());
+                    cheeseChaser.deadOrAlive();
+                    cheeseChaser.miseAjourPlus(c, cheeseChaser.cartes.size(), cheeseChaser.gameOver);
                 } else {
                     Log.d("onTouch", "pas de plus");
                 }
