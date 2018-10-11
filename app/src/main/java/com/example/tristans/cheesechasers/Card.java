@@ -6,6 +6,7 @@ package com.example.tristans.cheesechasers;
 // 3 = Chat
 // 4 = Fromage
 // 5 = Trap
+// 6 = Souris morte
 public class Card {
     int type;
 

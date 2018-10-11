@@ -13,6 +13,8 @@ import java.util.List;
 // 3 = Chat
 // 4 = Fromage
 // 5 = Trap
+// 6 = Souris morte
+// 7 = Trap dead
 class CheeseChaser {
     Case[][] games;
     List<Card> cartes;
@@ -27,7 +29,7 @@ class CheeseChaser {
         this.games = new Case[column][row];
         this.caseWidth = maxWidth / this.games[0].length;
         this.caseHeight = maxHeight / this.games[0].length;
-        this.cartes = initialiserCartes(1, 1, 1, 1);
+        this.cartes = initialiserCartes(7, 20, 4, 9);
         this.games = initialiserCase(column, row);
     }
 
@@ -104,6 +106,10 @@ class CheeseChaser {
         int xColumn = getNumColumn(caseCliqué.positionX, caseCliqué.positionY, true);
         int yRow = getNumColumn(caseCliqué.positionX, caseCliqué.positionY, false);
 
+        int xLenght = games.length;
+        int yLenght = games[0].length;
+
+
         for (int i = 0; i < games.length; i++) {
             for (int j = 0; j < games[i].length; j++) {
                 if (games[i][j].type == 1) {
@@ -111,31 +117,71 @@ class CheeseChaser {
                 }
             }
         }
-        if(test0 != 0){
-            if (this.games[xColumn - 1][yRow].type == 0)
-                this.games[xColumn - 1][yRow].type = 1;
-            if (this.games[xColumn - 1][yRow - 1].type == 0)
-                this.games[xColumn - 1][yRow - 1].type = 1;
-            if (this.games[xColumn - 1][yRow + 1].type == 0)
-                this.games[xColumn - 1][yRow + 1].type = 1;
 
-            if (this.games[xColumn][yRow - 1].type == 0)
-                this.games[xColumn][yRow - 1].type = 1;
-            if (this.games[xColumn][yRow + 1].type == 0)
-                this.games[xColumn][yRow + 1].type = 1;
+        if(test0 != 0) {
+            //Gauche
+            if (xColumn - 1 >= 0)
+                if (this.games[xColumn - 1][yRow].type == 0)
+                    this.games[xColumn - 1][yRow].type = 1;
+            if (xColumn - 1 >= 0 && yRow - 1 >= 0)
+                if (this.games[xColumn - 1][yRow - 1].type == 0)
+                    this.games[xColumn - 1][yRow - 1].type = 1;
+            if (xColumn - 1 >= 0 && yRow + 1 < yLenght)
+                if (this.games[xColumn - 1][yRow + 1].type == 0)
+                    this.games[xColumn - 1][yRow + 1].type = 1;
 
-            if (this.games[xColumn + 1][yRow].type == 0)
-                this.games[xColumn + 1][yRow].type = 1;
-            if (this.games[xColumn + 1][yRow - 1].type == 0)
-                this.games[xColumn + 1][yRow - 1].type = 1;
-            if (this.games[xColumn + 1][yRow + 1].type == 0)
-                this.games[xColumn + 1][yRow + 1].type = 1;
+            //Milieu
+            if (yRow - 1 >= 0)
+                if (this.games[xColumn][yRow - 1].type == 0)
+                    this.games[xColumn][yRow - 1].type = 1;
+            if (yRow + 1 < yLenght)
+                if (this.games[xColumn][yRow + 1].type == 0)
+                    this.games[xColumn][yRow + 1].type = 1;
+
+            //Droite
+            if (xColumn + 1 < xLenght)
+                if (this.games[xColumn + 1][yRow].type == 0)
+                    this.games[xColumn + 1][yRow].type = 1;
+            if (xColumn + 1 < xLenght && yRow - 1 >= 0)
+                if (this.games[xColumn + 1][yRow - 1].type == 0)
+                    this.games[xColumn + 1][yRow - 1].type = 1;
+            if (xColumn + 1 < xLenght && yRow + 1 < yLenght)
+                if (this.games[xColumn + 1][yRow + 1].type == 0)
+                    this.games[xColumn + 1][yRow + 1].type = 1;
         }
+    }
 
+    public void miseAjourChatVsSouris() {
+        for (int i = 0; i < games.length; i++) {
+            for (int j = 0; j < games[i].length; j++) {
+                if (games[i][j].type == 3) {
+                    if (j - 1 >= 0)
+                        if (this.games[i][j - 1].type == 2)
+                            this.games[i][j - 1].type = 6;
+                    if (j + 1 < games[i].length)
+                        if (this.games[i][j + 1].type == 2)
+                            this.games[i][j + 1].type = 6;
+                    if (i - 1 >= 0)
+                        if (this.games[i - 1][j].type == 2)
+                            this.games[i - 1][j].type = 6;
+                    if (i + 1 < games.length)
+                        if (this.games[i + 1][j].type == 2)
+                            this.games[i + 1][j].type = 6;
+                }
+            }
+        }
+    }
 
-
-
-
+    public void miseAjourTrapVsSouris() {
+        for (int i = 0; i < games.length; i++) {
+            for (int j = 0; j < games[i].length; j++) {
+                if (games[i][j].type == 5) {
+                    if ((j - 1 >= 0) && (j + 1 < games[i].length) && (i - 1 >= 0) && (i + 1 < games.length))
+                        if ((this.games[i][j - 1].type == 2) && (this.games[i][j + 1].type == 2) && (this.games[i - 1][j].type == 2) && (this.games[i + 1][j].type == 2))
+                            games[i][j].type = 7;
+                }
+            }
+        }
     }
 
     public int getNumColumn(int positionX, int positionY, boolean row) {

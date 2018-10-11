@@ -12,8 +12,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 
-import java.util.List;
-
 public class Dessin extends View implements View.OnTouchListener {
 
     public ImageButton ImageBtn;
@@ -28,7 +26,7 @@ public class Dessin extends View implements View.OnTouchListener {
     @Override
     protected void onDraw(Canvas canvas) {
         if (cheeseChaser == null) {
-            cheeseChaser = new CheeseChaser(10, 10, this.getWidth(), this.getHeight());
+            cheeseChaser = new CheeseChaser(20, 20, this.getWidth(), this.getHeight());
         }
         Paint paint = new Paint();
         Resources res = getResources();
@@ -63,6 +61,14 @@ public class Dessin extends View implements View.OnTouchListener {
                         bitmap = BitmapFactory.decodeResource(res, R.drawable.mousetrap);
                         newBitmap = Bitmap.createScaledBitmap(bitmap, cheeseChaser.caseWidth, cheeseChaser.caseHeight, true);
                         break;
+                    case 6: // Souris Dead
+                        bitmap = BitmapFactory.decodeResource(res, R.drawable.mouserip);
+                        newBitmap = Bitmap.createScaledBitmap(bitmap, cheeseChaser.caseWidth, cheeseChaser.caseHeight, true);
+                        break;
+                    case 7: // Trap Dead
+                        bitmap = BitmapFactory.decodeResource(res, R.drawable.mousetraprip);
+                        newBitmap = Bitmap.createScaledBitmap(bitmap, cheeseChaser.caseWidth, cheeseChaser.caseHeight, true);
+                        break;
                     default:
                         continue;
                 }
@@ -82,6 +88,9 @@ public class Dessin extends View implements View.OnTouchListener {
                     cheeseChaser.games[cheeseChaser.getNumColumn(c.positionX, c.positionY, true)][cheeseChaser.getNumColumn(c.positionX, c.positionY, false)].type = cheeseChaser.cartes.get(0).type;
 
                     cheeseChaser.retirerCarte();
+                    updateCarteEnHaut();
+                    cheeseChaser.miseAjourChatVsSouris();
+                    cheeseChaser.miseAjourTrapVsSouris();
                     cheeseChaser.miseAjourPlus(c,cheeseChaser.cartes.size());
                 } else {
                     Log.d("onTouch", "pas de plus");
