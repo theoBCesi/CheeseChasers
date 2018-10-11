@@ -28,50 +28,24 @@ public class Dessin extends View implements View.OnTouchListener {
 
     public Dessin(Context context, AttributeSet attrs) {
         super(context, attrs);
-        //int toto=this.getWidth();
-         Log.d("Dessin", "start");
-        //Log.d("cheeseChaserMaxWidth", "" + cheeseChaser.maxWidth);
-        //Log.d("cheeseChaserMaxHeight", "" + cheeseChaser.maxHeight);
-
-        //Log.d("cheeseChaserCaseWidth", "" + cheeseChaser.caseWidth);
-        //Log.d("cheeseChaserCaseHeight", "" + cheeseChaser.caseHeight);
-        // Set image de la première carte en haut a droite
+        Log.d("Dessin", "start");
         this.setOnTouchListener(this);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         if (cheeseChaser == null) {
-            cheeseChaser = new CheeseChaser(20, 20, this.getWidth(), this.getHeight());
+            cheeseChaser = new CheeseChaser(10, 10, this.getWidth(), this.getHeight());
         }
-        super.onDraw(canvas);
         Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setFilterBitmap(true);
-        paint.setDither(true);
         Resources res = getResources();
-        Bitmap bitmap_mouse = BitmapFactory.decodeResource(res, R.drawable.mouse);
-
-
-        Log.d("onDraw", "" + this.getWidth() + "-" + this.getHeight());
-
-        int widthTotal = this.getWidth();
-        int widthCase = widthTotal / cheeseChaser.games.length;
-        int heightTotal = this.getHeight();
-        int heightCase = heightTotal / cheeseChaser.games.length;
-
-        for (int i = 0; i < cheeseChaser.games.length -1 ; i++) {
-            for (int j = 0; j < cheeseChaser.games[i].length -1 ; j++) {
-                canvas.drawBitmap(bitmap_mouse, (widthCase + (widthCase * i)), (heightCase + (heightCase * j)), paint);
-            }
-        }
 
         /** Gestion de la case de la carte et premier démarrage du jeu **/
         List<Card> vListeCards = cheeseChaser.cartes;
-        if(vListeCards.get(0) != null){
-            Log.d("Test : " ,"Card n°" +  vListeCards.get(0).type);
+        if (vListeCards.get(0) != null) {
+            Log.d("Test : ", "Card n°" + vListeCards.get(0).type);
             int chiffre = vListeCards.get(0).type;
-            switch (chiffre){
+            switch (chiffre) {
                 case 2: // Souris
                     ImageBtn.setBackgroundResource(R.drawable.mouse);
                     break;
@@ -86,7 +60,42 @@ public class Dessin extends View implements View.OnTouchListener {
                     break;
             }
         }
+        Log.d("onDraw", "" + this.getWidth() + "-" + this.getHeight());
+        Bitmap bitmap;
+        Bitmap newBitmap;
+        for (int i = 0; i < cheeseChaser.games.length; i++) {
+            for (int j = 0; j < cheeseChaser.games[i].length; j++) {
+                switch (cheeseChaser.games[i][j].type) {
+                    case 1: //+
+                        bitmap = BitmapFactory.decodeResource(res, R.drawable.plus);
+                        newBitmap = Bitmap.createScaledBitmap(bitmap, cheeseChaser.caseWidth, cheeseChaser.caseHeight, true);
+                        break;
 
+                    case 2: // Souris
+                        bitmap = BitmapFactory.decodeResource(res, R.drawable.mouse);
+                        newBitmap = Bitmap.createScaledBitmap(bitmap, cheeseChaser.caseWidth, cheeseChaser.caseHeight, true);
+                        break;
+
+                    case 3: // Chat
+                        bitmap = BitmapFactory.decodeResource(res, R.drawable.cat);
+                        newBitmap = Bitmap.createScaledBitmap(bitmap, cheeseChaser.caseWidth, cheeseChaser.caseHeight, true);
+                        break;
+
+                    case 4: // Fromage
+                        bitmap = BitmapFactory.decodeResource(res, R.drawable.cheese);
+                        newBitmap = Bitmap.createScaledBitmap(bitmap, cheeseChaser.caseWidth, cheeseChaser.caseHeight, true);
+                        break;
+
+                    case 5: // Trap
+                        bitmap = BitmapFactory.decodeResource(res, R.drawable.mousetrap);
+                        newBitmap = Bitmap.createScaledBitmap(bitmap, cheeseChaser.caseWidth, cheeseChaser.caseHeight, true);
+                        break;
+                    default:
+                        continue;
+                }
+                canvas.drawBitmap(newBitmap, i * cheeseChaser.caseWidth, j * cheeseChaser.caseHeight, paint);
+            }
+        }
 
     }
 
@@ -101,28 +110,5 @@ public class Dessin extends View implements View.OnTouchListener {
         }
         //this.invalidate();
         return true;
-    }
-}
-
-class Cercle {
-    int xc, yc, rayon;
-    private Paint paint;
-
-    public Cercle(int x, int y, int r) {
-        xc = x;
-        yc = y;
-        rayon = r;
-        //paint.setFilterBitmap(true);
-        paint = new Paint();
-        /*paint.setColor(Color.rgb((int) (Math.random() * 255),
-                (int) (Math.random() * 255),
-                (int) (Math.random() * 255))
-        );*/
-    }
-
-    public void draw(Canvas canvas,Bitmap b) {
-
-        //canvas.drawBitmap(b, 10,10,paint);
-        //canvas.drawCircle(xc, yc, rayon, paint);
     }
 }

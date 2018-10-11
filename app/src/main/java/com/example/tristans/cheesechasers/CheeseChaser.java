@@ -1,5 +1,7 @@
 package com.example.tristans.cheesechasers;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,32 +30,37 @@ class CheeseChaser {
         this.cartes = initialiserCartes(7, 20, 4, 9);
     }
 
-    public static List<Card> initialiserCartes(int nbChat, int nbSouris, int nbTrap, int nbFromage) {
-        List<Card> games = new ArrayList<Card>();
+    public List<Card> initialiserCartes(int nbChat, int nbSouris, int nbTrap, int nbFromage) {
+        List<Card> cartes = new ArrayList<Card>();
+
         for (int i = 0; i < nbChat; i++) {
-            games.add(new Card(3)); // Chat
+            cartes.add(new Card(3)); // Chat
         }
 
         for (int i = 0; i < nbSouris; i++) {
-            games.add(new Card(2)); // Souris
+            cartes.add(new Card(2)); // Souris
         }
 
         for (int i = 0; i < nbTrap; i++) {
-            games.add(new Card(5)); // Trap
+            cartes.add(new Card(5)); // Trap
         }
 
         for (int i = 0; i < nbFromage; i++) {
-            games.add(new Card(4)); // Fromage
+            cartes.add(new Card(4)); // Fromage
         }
-        Collections.shuffle(games);
-        return games;
+        Collections.shuffle(cartes);
+        return cartes;
     }
 
     public Case[][] initialiserCase(int column, int row) {
         Case[][] cases = new Case[column][row];
-        for (int i = 0; i < this.games[i].length - 1; i++) {
-            for (int j = 0; j < this.games[j].length - 1; j++) {
-                cases[i][j] = new Case((this.caseWidth + (this.caseWidth * i)), (this.caseHeight + (this.caseHeight * j)), 0);
+        for (int i = 0; i < cases.length; i++) {
+            for (int j = 0; j < cases[i].length; j++) {
+                if (i == (column / 2) && j == (row / 2)) {
+                    cases[i][j] = new Case((this.caseWidth * i), (this.caseHeight * j), 2);
+                } else {
+                    cases[i][j] = new Case((this.caseWidth * i), (this.caseHeight * j), 0);
+                }
             }
         }
         return cases;
@@ -61,8 +68,8 @@ class CheeseChaser {
 
     public Case getCase(float x, float y) {
         Case c = new Case();
-        for (int i = 0; i < this.games[i].length - 1; i++) {
-            for (int j = 0; j < this.games[j].length - 1; j++) {
+        for (int i = 0; i < games.length; i++) {
+            for (int j = 0; j < games[i].length; j++) {
                 if ((games[i][j].positionX < x && x < games[i][j].positionX + this.caseWidth)
                         && (games[i][j].positionY < y && y < games[i][j].positionY + this.caseHeight)) {
                     c = games[i][j];
