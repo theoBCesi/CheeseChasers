@@ -34,8 +34,8 @@ public class Dessin extends View implements View.OnTouchListener {
         int heightTotal = this.getHeight();
         int heightCase = heightTotal / 10;
 
-        for (int i = 0; i < jeux.length-1; i++) {
-            for (int j = 0; j < jeux[i].length-1; j++) {
+        for (int i = 0; i < jeux.length -1 ; i++) {
+            for (int j = 0; j < jeux[i].length -1 ; j++) {
                 Cercle c = new Cercle((widthCase + (widthCase * i)), (heightCase + (heightCase * j)), 15);
                 c.draw(canvas);
             }
