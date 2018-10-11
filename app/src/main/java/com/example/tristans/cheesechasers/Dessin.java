@@ -65,6 +65,10 @@ public class Dessin extends View implements View.OnTouchListener {
                         bitmap = BitmapFactory.decodeResource(res, R.drawable.mouserip);
                         newBitmap = Bitmap.createScaledBitmap(bitmap, cheeseChaser.caseWidth, cheeseChaser.caseHeight, true);
                         break;
+                    case 7: // Trap Dead
+                        bitmap = BitmapFactory.decodeResource(res, R.drawable.mousetraprip);
+                        newBitmap = Bitmap.createScaledBitmap(bitmap, cheeseChaser.caseWidth, cheeseChaser.caseHeight, true);
+                        break;
                     default:
                         continue;
                 }
@@ -85,6 +89,7 @@ public class Dessin extends View implements View.OnTouchListener {
                     cheeseChaser.retirerCarte();
                     updateCarteEnHaut();
                     cheeseChaser.miseAjourChatVsSouris();
+                    cheeseChaser.miseAjourTrapVsSouris();
                     cheeseChaser.miseAjourPlus(c);
                 } else {
                     Log.d("onTouch", "pas de plus");

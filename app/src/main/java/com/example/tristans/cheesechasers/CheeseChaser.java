@@ -14,6 +14,7 @@ import java.util.List;
 // 4 = Fromage
 // 5 = Trap
 // 6 = Souris morte
+// 7 = Trap dead
 class CheeseChaser {
     Case[][] games;
     List<Card> cartes;
@@ -163,6 +164,18 @@ class CheeseChaser {
                     if (i + 1 < games.length)
                         if (this.games[i + 1][j].type == 2)
                             this.games[i + 1][j].type = 6;
+                }
+            }
+        }
+    }
+
+    public void miseAjourTrapVsSouris() {
+        for (int i = 0; i < games.length; i++) {
+            for (int j = 0; j < games[i].length; j++) {
+                if (games[i][j].type == 5) {
+                    if ((j - 1 >= 0) && (j + 1 < games[i].length) && (i - 1 >= 0) && (i + 1 < games.length))
+                        if ((this.games[i][j - 1].type == 2) && (this.games[i][j + 1].type == 2) && (this.games[i - 1][j].type == 2) && (this.games[i + 1][j].type == 2))
+                            games[i][j].type = 7;
                 }
             }
         }
