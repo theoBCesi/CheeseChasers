@@ -36,10 +36,15 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageButton
+            <TextView
                 android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:background="@drawable/mouse" />
+                android:layout_height="30dp"
+                android:text="Score" />
+
+            <TextView
+                android:layout_width="65dp"
+                android:layout_height="30dp"
+                android:text="0" />
         </LinearLayout>
 
         <LinearLayout
@@ -48,10 +53,16 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageButton
+            <TextView
                 android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:background="@drawable/mouse" />
+                android:layout_height="30dp"
+                android:text="Cartes" />
+
+            <TextView
+                android:id="@+id/nbCartes"
+                android:layout_width="65dp"
+                android:layout_height="30dp"
+                android:text="0" />
         </LinearLayout>
 
         <LinearLayout

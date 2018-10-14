@@ -11,10 +11,12 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class Dessin extends View implements View.OnTouchListener {
 
     public ImageButton ImageBtn;
+    public TextView nbCarteRestant;
     CheeseChaser cheeseChaser;
 
     public Dessin(Context context, AttributeSet attrs) {
@@ -31,6 +33,7 @@ public class Dessin extends View implements View.OnTouchListener {
         Paint paint = new Paint();
         Resources res = getResources();
         updateCarteEnHaut();
+        updateNbCarteRestance();
         Log.d("onDraw", "" + this.getWidth() + "-" + this.getHeight());
         Bitmap bitmap;
         Bitmap newBitmap;
@@ -127,5 +130,9 @@ public class Dessin extends View implements View.OnTouchListener {
         } else {
             ImageBtn.setBackgroundResource(R.drawable.croix);
         }
+    }
+
+    public void updateNbCarteRestance() {
+        nbCarteRestant.setText("" + cheeseChaser.cartes.size());
     }
 }
