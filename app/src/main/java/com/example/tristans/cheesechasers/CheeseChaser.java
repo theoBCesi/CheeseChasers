@@ -30,7 +30,7 @@ class CheeseChaser {
         this.games = new Case[column][row];
         this.caseWidth = maxWidth / this.games[0].length;
         this.caseHeight = maxHeight / this.games[0].length;
-        this.cartes = initialiserCartes(7, 20, 0, 9);
+        this.cartes = initialiserCartes(7, 20, 4, 9);
         this.games = initialiserCase(column, row);
     }
 
